@@ -10,7 +10,7 @@
   var m=p.match(/^([0-9a-z]+)-([0-9a-z]+)$/i); var u=m?(m[1]=='x'?m[2]+'/':m[1]+'/'+m[2]+'/'):'';
   var el=document.getElementById('c');
   if(!u){ el.innerHTML='<p>Откройте страницу кнопкой под постом.</p>'; return; }
-  fetch(u+'index.html').then(function(r){return r.text()}).then(function(t){
+  fetch(u+'index.html?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){
     var d=new DOMParser().parseFromString(t,'text/html'); var box=d.querySelector('div');
     el.innerHTML=box?box.innerHTML:t;
     el.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(e){ var h=a.getAttribute('href'); if(!h||h=='#')return; e.preventDefault(); try{ if(h.indexOf('https://max.ru/')==0&&window.WebApp&&WebApp.openMaxLink){ WebApp.openMaxLink(h); } else if(window.WebApp&&WebApp.openLink){ WebApp.openLink(h); } else { location.href=h; } }catch(x){ location.href=h; } }); });
