@@ -1,1 +1,19 @@
-<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width"><title>Проверка</title><body style="font-family:Georgia;font-size:22px;padding:24px;background:#faf5ea"><p>Проверка страницы. Если вы это видите, адрес открывается.</p>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Клуб</title>
+<script src="https://st.max.ru/js/max-web-app.js"></script>
+<style>body{margin:0;background:#faf5ea;color:#2b2b2b;font-family:Georgia,serif;font-size:20px;line-height:1.55}#c{max-width:680px;margin:0 auto;padding:24px 20px 60px}h2{color:#8a6a1f}a{color:#8a6a1f}</style></head>
+<body><div id="c">Загружаю…</div>
+<script>
+(function(){
+  var p='';
+  try{ if(window.WebApp){ WebApp.ready&&WebApp.ready(); p=(WebApp.initDataUnsafe&&WebApp.initDataUnsafe.start_param)||''; } }catch(e){}
+  if(!p){ var q=new URLSearchParams(location.search); p=q.get('p')||q.get('startapp')||''; }
+  var m=p.match(/^([0-9a-z]+)-([0-9a-z]+)$/i); var u=m?(m[1]=='x'?m[2]+'/':m[1]+'/'+m[2]+'/'):'';
+  var el=document.getElementById('c');
+  if(!u){ el.innerHTML='<p>Откройте страницу кнопкой под постом.</p>'; return; }
+  fetch(u+'index.html').then(function(r){return r.text()}).then(function(t){
+    var d=new DOMParser().parseFromString(t,'text/html'); var box=d.querySelector('div');
+    el.innerHTML=box?box.innerHTML:t;
+    el.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(e){ var h=a.getAttribute('href'); if(h&&h.indexOf('http')==0&&window.WebApp&&WebApp.openLink){ e.preventDefault(); WebApp.openLink(h);} }); });
+  }).catch(function(){ el.textContent='Не получилось открыть. Попробуйте ещё раз.'; });
+})();
+</script></body></html>
