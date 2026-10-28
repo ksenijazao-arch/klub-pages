@@ -13,7 +13,7 @@
   fetch(u+'index.html').then(function(r){return r.text()}).then(function(t){
     var d=new DOMParser().parseFromString(t,'text/html'); var box=d.querySelector('div');
     el.innerHTML=box?box.innerHTML:t;
-    el.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(e){ var h=a.getAttribute('href'); if(h&&h.indexOf('http')==0&&window.WebApp&&WebApp.openLink){ e.preventDefault(); WebApp.openLink(h);} }); });
+    el.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(e){ var h=a.getAttribute('href'); if(!h||h=='#')return; e.preventDefault(); try{ if(h.indexOf('https://max.ru/')==0&&window.WebApp&&WebApp.openMaxLink){ WebApp.openMaxLink(h); } else if(window.WebApp&&WebApp.openLink){ WebApp.openLink(h); } else { location.href=h; } }catch(x){ location.href=h; } }); });
   }).catch(function(){ el.textContent='Не получилось открыть. Попробуйте ещё раз.'; });
 })();
 </script></body></html>
